@@ -1,0 +1,14 @@
+DATASET: '/media/nebula/Databases/Facial Expression/ExpW/origin'
+ANNOTATION: '/media/nebula/Databases/Facial Expression/ExpW/label.lst'
+VAL_RATIO: 0.2
+MODEL: ''
+INPUT_SIZE: 64
+LAYERS: [2, 2, 2, 2]
+NC: 6
+NW: 12
+NE: 100
+BS: 128
+LR: 0.002
+STEP_SIZE: 20
+GAMMA: 0.5
+APEX: False
