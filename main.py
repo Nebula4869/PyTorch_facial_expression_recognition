@@ -93,17 +93,17 @@ def train(model, criterion, data_loader, epoch, optimizer, apex):
 
         train_writer.add_scalar('loss', batch_loss, global_step)
         train_writer.add_scalar('acc', batch_acc, global_step)
-        sys.stdout.write('\rProcess: [{:5.0f}/{:5.0f} ({:2.2f}%)] '
+        sys.stdout.write('\rProcess: [{:5.0f}/{:5.0f} ({:2.2%})] '
                          'Batch Loss: {:.4f} '
                          'Train Loss: {:.4f} '
-                         'Batch Acc: {:.2f}% '
-                         'Train Acc {:.2f}% '
+                         'Batch Acc: {:.2%} '
+                         'Train Acc {:.2%} '
                          'Estimated time: {:.2f}s'.format(
-                            processed_size, dataset_size, 100. * processed_size / dataset_size,
+                            processed_size, dataset_size, processed_size / dataset_size,
                             float(batch_loss),
                             float(train_loss) / processed_size,
-                            100. * float(batch_acc),
-                            100. * float(train_acc) / processed_size,
+                            float(batch_acc),
+                            float(train_acc) / processed_size,
                             (time.time() - timer))),
         sys.stdout.flush()
         global_step += 1
@@ -111,7 +111,7 @@ def train(model, criterion, data_loader, epoch, optimizer, apex):
         timer = time.time()
 
     # Record and display data
-    print('\nTrain Loss: {:.4f} Train Acc: {:.2f}%'.format(train_loss / processed_size, 100. * train_acc / processed_size))
+    print('\nTrain Loss: {:.4f} Train Acc: {:.2%}'.format(train_loss / processed_size, train_acc / processed_size))
 
 
 def val(model, criterion, data_loader, epoch, save):
@@ -147,7 +147,7 @@ def val(model, criterion, data_loader, epoch, save):
         val_acc /= processed_size
         val_writer.add_scalar('loss', val_loss, epoch * num_steps)
         val_writer.add_scalar('acc', val_acc, epoch * num_steps)
-        print('Val Loss: {:.4f} Val Acc:{:.2f}%'.format(val_loss, 100 * val_acc))
+        print('Val Loss: {:.4f} Val Acc:{:.2%}'.format(val_loss, val_acc))
 
         # Save model
         if save and val_acc > best_acc:
@@ -198,15 +198,3 @@ if __name__ == '__main__':
         os.mkdir(save_path)
 
     main(config)
-'''
-python3 main.py
-cd ..
-cd ..
-cd facial_expression_recognition
-python3 main.py
-cd ..
-cd gender_age_estimate
-python3 main.py
-cd ..
- 
-'''
